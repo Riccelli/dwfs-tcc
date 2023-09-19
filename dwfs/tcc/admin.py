@@ -1,3 +1,28 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+
+class TelefoneInline(admin.TabularInline):
+    model = Telefone
+    extra = 1
+
+
+class ClienteAdmin(admin.ModelAdmin):
+    inlines = [TelefoneInline]
+
+
+class AliquotaInline(admin.TabularInline):
+    model = Aliquota
+    extra = 1
+
+
+class IndiceAdmin(admin.ModelAdmin):
+    inlines = [AliquotaInline]
+
+
+admin.site.register(Indice, IndiceAdmin)
+admin.site.register(Modalidade)
+admin.site.register(Programa)
+admin.site.register(Cliente, ClienteAdmin)
+admin.site.register(Proposta)

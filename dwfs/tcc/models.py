@@ -45,8 +45,8 @@ class Aliquota(models.Model):
 
 
 class Programa(models.Model):
-    indice = models.ForeignKey(Indice, on_delete=models.CASCADE)
-    modalidade = models.ForeignKey(Modalidade, on_delete=models.CASCADE)
+    indice = models.ForeignKey(Indice, on_delete=models.RESTRICT)
+    modalidade = models.ForeignKey(Modalidade, on_delete=models.RESTRICT)
     descricao = models.CharField(max_length=100)
 
     def __str__(self):
@@ -54,8 +54,8 @@ class Programa(models.Model):
 
 
 class Proposta(models.Model):
-    programa = models.ForeignKey(Programa, on_delete=models.CASCADE)
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    programa = models.ForeignKey(Programa, on_delete=models.RESTRICT)
+    cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
     contrato = models.CharField(max_length=20)
     data_criacao = models.DateField()
 
