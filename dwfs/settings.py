@@ -28,10 +28,12 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'dwfs.azurewebsites.net',
     '127.0.0.1',
-    '20.206.176.5',
     'localhost'
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://dwfs.azurewebsites.net'
+]
 
 # Application definition
 
