@@ -14,9 +14,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.contrib.auth import views as auth_views
+from django.urls import path, include
+
+from tcc import views as tcc_views
+
+admin.site.site_title = 'TCC - DWFS'
+admin.site.site_header = 'Administração'
 
 urlpatterns = [
+    path('', include('django.contrib.auth.urls')),
     path("admin/", admin.site.urls),
+    path('accounts/login/', auth_views.LoginView.as_view()),
+    path('tcc/', include('tcc.urls')),
+
+    # Home Page
+    path('', tcc_views.home),
 ]
