@@ -26,8 +26,9 @@ admin.site.site_header = 'Administração'
 
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
-    path("admin/", admin.site.urls),
-    path('accounts/login/', auth_views.LoginView.as_view()),
+    path('', include('admin_volt.urls')),
+    path('', admin.site.urls),
+    # path('accounts/login/', auth_views.LoginView.as_view()),
     path('tcc/', include('tcc.urls')),
 
     # Home Page

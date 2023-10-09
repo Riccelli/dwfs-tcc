@@ -1,6 +1,10 @@
-django==4.2.6
+django<4.3
+django-bootstrap-v5<1.1
 psycopg2-binary==2.9.9
 asgiref==3.7.2
 tzdata==2023.3
 sqlparse==0.4.4
 whitenoise==6.5.0
+beautifulsoup4==4.11.1
+typing-extensions>=4
+soupsieve>1.2

@@ -28,23 +28,25 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'dwfs.azurewebsites.net',
     '127.0.0.1',
-    'localhost'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://dwfs.azurewebsites.net'
+    'http://127.0.0.1',
 ]
 
 # Application definition
 
 INSTALLED_APPS = [
-    "tcc.apps.TccConfig",
+    "admin_volt.apps.AdminVoltConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "tcc.apps.TccConfig",
+    "bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -93,6 +95,18 @@ DATABASES = {
     }
 }
 
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'NAME': 'dwfsdb',
+        'USER': 'udwfs',
+        'PASSWORD': 'TCC@DWFS',
+    }
+}
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -142,3 +156,5 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+LOGIN_REDIRECT_URL = '/'
