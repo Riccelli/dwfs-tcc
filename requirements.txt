@@ -1,4 +1,5 @@
 django<4.3
+django-admin-volt==1.0.10
 django-bootstrap-v5<1.1
 psycopg2-binary==2.9.9
 asgiref==3.7.2
