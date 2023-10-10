@@ -16,7 +16,6 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
 from django.urls import path, include
 
 from tcc import views as tcc_views
@@ -28,9 +27,8 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('', include('admin_volt.urls')),
     path('', admin.site.urls),
-    # path('accounts/login/', auth_views.LoginView.as_view()),
     path('tcc/', include('tcc.urls')),
 
     # Home Page
-    path('', tcc_views.home),
+    # path('', tcc_views.home),
 ]
