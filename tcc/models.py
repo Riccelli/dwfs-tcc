@@ -13,7 +13,7 @@ class Cliente(models.Model):
 class Telefone(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     ddd = models.IntegerField()
-    numero = models.CharField(max_length=9)
+    numero = models.CharField('Número', max_length=9)
 
     def __str__(self):
         return '(' + str(self.ddd) + ') ' + str(self.numero)
@@ -21,7 +21,7 @@ class Telefone(models.Model):
 
 class Modalidade(models.Model):
     sigla = models.CharField(max_length=10)
-    descricao = models.CharField(max_length=100)
+    descricao = models.CharField('Descrição', max_length=100)
 
     def __str__(self):
         return self.sigla
@@ -29,25 +29,25 @@ class Modalidade(models.Model):
 
 class Indice(models.Model):
     sigla = models.CharField(max_length=10)
-    descricao = models.CharField(max_length=100)
+    descricao = models.CharField('Descrição', max_length=100)
 
     def __str__(self):
         return self.sigla
 
 
 class Aliquota(models.Model):
-    indice = models.ForeignKey(Indice, on_delete=models.CASCADE)
-    vigencia = models.DateField()
-    aliquota = models.DecimalField(max_digits=5, decimal_places=2)
+    indice = models.ForeignKey(Indice, on_delete=models.CASCADE, verbose_name='Índice')
+    vigencia = models.DateField('Data Inicial de Vigência')
+    aliquota = models.DecimalField('Taxa % a.a.', max_digits=5, decimal_places=2)
 
     def __str__(self):
         return str(self.vigencia) + ' - ' + str(self.aliquota)
 
 
 class Programa(models.Model):
-    indice = models.ForeignKey(Indice, on_delete=models.RESTRICT)
+    indice = models.ForeignKey(Indice, on_delete=models.RESTRICT, verbose_name='Índice')
     modalidade = models.ForeignKey(Modalidade, on_delete=models.RESTRICT)
-    descricao = models.CharField(max_length=100)
+    descricao = models.CharField('Descrição', max_length=100)
 
     def __str__(self):
         return self.descricao
@@ -57,9 +57,9 @@ class Proposta(models.Model):
     programa = models.ForeignKey(Programa, on_delete=models.RESTRICT)
     cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
     contrato = models.CharField(max_length=20)
-    data_criacao = models.DateField()
+    data_criacao = models.DateField('Data de Criação')
     valor_principal = models.DecimalField(max_digits=18, decimal_places=2, default=0)
-    numero_de_parcelas = models.IntegerField(default=0)
+    numero_de_parcelas = models.IntegerField('Número de Parcelas', default=0)
 
     def __str__(self):
         return self.contrato
@@ -67,8 +67,8 @@ class Proposta(models.Model):
 
 class Parcela(models.Model):
     proposta = models.ForeignKey(Proposta, on_delete=models.CASCADE)
-    numero = models.IntegerField()
-    vencimento = models.DateField()
+    numero = models.IntegerField('Número')
+    vencimento = models.DateField('Data de Vencimento')
     valor = models.DecimalField(max_digits=18, decimal_places=2)
 
     def __str__(self):
@@ -77,7 +77,7 @@ class Parcela(models.Model):
 
 class Pagamento(models.Model):
     parcela = models.ForeignKey(Parcela, on_delete=models.CASCADE)
-    data_pagamento = models.DateField()
+    data_pagamento = models.DateField('Data de Pagamento')
     valor = models.DecimalField(max_digits=18, decimal_places=2)
 
     def __str__(self):

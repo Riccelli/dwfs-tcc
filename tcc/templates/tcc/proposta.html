@@ -31,6 +31,16 @@
         <label for="{{ form.data_criacao.id_for_label }}" class="form-label">Data de Criação:</label>
         {{ form.data_criacao }}
     </div>
+    <div class="mb-3">
+        {{ form.valor_principal.errors }}
+        <label for="{{ form.valor_principal.id_for_label }}" class="form-label">Valor Principal:</label>
+        {{ form.valor_principal }}
+    </div>
+    <div class="mb-3">
+        {{ form.numero_de_parcelas.errors }}
+        <label for="{{ form.numero_de_parcelas.id_for_label }}" class="form-label">Número de Parcelas:</label>
+        {{ form.numero_de_parcelas }}
+    </div>
     <input type="submit" value="Confirmar">
 </form>
 </body>

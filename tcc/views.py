@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django import forms
 from .models import Proposta, Parcela
 from .forms import PropostaForm
 
@@ -17,7 +18,7 @@ def cadastro_proposta(request):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            return HttpResponseRedirect("/thanks/")
+            return HttpResponseRedirect("/tcc/consulta/proposta")
 
     # if a GET (or any other method) we'll create a blank form
     else:
@@ -27,5 +28,7 @@ def cadastro_proposta(request):
         form.fields["cliente"].widget.attrs.update({"class": "form-select"})
         form.fields["contrato"].widget.attrs.update({"class": "form-control"})
         form.fields["data_criacao"].widget.attrs.update({"class": "form-control"})
+        form.fields["valor_principal"].widget.attrs.update({"class": "form-control"})
+        form.fields["numero_de_parcelas"].widget.attrs.update({"class": "form-control"})
 
     return render(request, "tcc/proposta.html", {"form": form})
