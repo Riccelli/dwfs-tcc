@@ -4,8 +4,15 @@ from django import forms
 from .models import Proposta, Parcela
 from .forms import PropostaForm
 
-def home(request):
-    return render(request, 'tcc/index.html', {})
+
+def gerar_parcelas(prop):
+    if prop.modalidade == 'SAC':
+        amortizacao = prop.principal / prop.numero_de_parcelas
+        pass
+    elif prop.modalidade == 'PRICE':
+        pass
+    else:
+        pass
 
 
 def cadastro_proposta(request):
@@ -15,10 +22,11 @@ def cadastro_proposta(request):
         form = PropostaForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect("/tcc/consulta/proposta")
+            nova_proposta = form.save()
+            # Calcular e gravar parcelas
+            gerar_parcelas(nova_proposta)
+
+            return HttpResponseRedirect(str.format("/tcc/proposta/{0}/change", nova_proposta.id))
 
     # if a GET (or any other method) we'll create a blank form
     else:
