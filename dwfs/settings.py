@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-5bi#j^_-it-lufamm*oqh_xn3$x3rozoxe@4gj6+@md+6r8bk4"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'dwfs.azurewebsites.net',
@@ -82,28 +82,16 @@ WSGI_APPLICATION = "dwfs.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'HOST': 'localhost',
-            'PORT': '5432',
-            'NAME': 'dwfsdb',
-            'USER': 'udwfs',
-            'PASSWORD': 'TCC@DWFS',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'silly.db.elephantsql.com',
+        'PORT': '5432',
+        'NAME': 'yxqsylpn',
+        'USER': 'yxqsylpn',
+        'PASSWORD': 'bPLorQIhjkG-A144F2JGvKaE0MKCosup',
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'HOST': 'silly.db.elephantsql.com',
-            'PORT': '5432',
-            'NAME': 'yxqsylpn',
-            'USER': 'yxqsylpn',
-            'PASSWORD': 'bPLorQIhjkG-A144F2JGvKaE0MKCosup',
-        }
-    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
