@@ -58,6 +58,8 @@ class Proposta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
     contrato = models.CharField(max_length=20)
     data_criacao = models.DateField()
+    valor_principal = models.DecimalField(max_digits=18, decimal_places=2, default=0)
+    numero_de_parcelas = models.IntegerField(default=0)
 
     def __str__(self):
         return self.contrato
