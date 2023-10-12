@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-5bi#j^_-it-lufamm*oqh_xn3$x3rozoxe@4gj6+@md+6r8bk4"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'dwfs.azurewebsites.net',
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "tcc.apps.TccConfig",
     "bootstrap5",
-    # "import_export",
+    "import_export",
 ]
 
 MIDDLEWARE = [
