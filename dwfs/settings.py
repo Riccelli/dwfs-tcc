@@ -30,7 +30,8 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://dwfs.azurewebsites.net'
+    'https://dwfs.azurewebsites.net',
+    'http://dwfs.azurewebsites.net',
     'http://127.0.0.1',
 ]
 
