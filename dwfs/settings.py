@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "tcc.apps.TccConfig",
     "bootstrap5",
-    "import_export",
+    # "import_export",
 ]
 
 MIDDLEWARE = [
