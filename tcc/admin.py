@@ -1,6 +1,5 @@
 from django.contrib import admin
 from .models import Indice, Modalidade, Programa, Cliente, Proposta, Telefone, Aliquota
-from import_export.admin import ExportActionModelAdmin
 
 
 class TelefoneInline(admin.TabularInline):
@@ -8,7 +7,7 @@ class TelefoneInline(admin.TabularInline):
     extra = 1
 
 
-class ClienteAdmin(ExportActionModelAdmin):
+class ClienteAdmin(admin.ModelAdmin):
     inlines = [TelefoneInline]
 
 
@@ -17,24 +16,12 @@ class AliquotaInline(admin.TabularInline):
     extra = 1
 
 
-class IndiceAdmin(ExportActionModelAdmin):
+class IndiceAdmin(admin.ModelAdmin):
     inlines = [AliquotaInline]
 
 
-class ModalidadeAdmin(ExportActionModelAdmin):
-    pass
-
-
-class ProgramaAdmin(ExportActionModelAdmin):
-    pass
-
-
-class PropostaAdmin(ExportActionModelAdmin):
-    pass
-
-
 admin.site.register(Indice, IndiceAdmin)
-admin.site.register(Modalidade, ModalidadeAdmin)
-admin.site.register(Programa, ProgramaAdmin)
+admin.site.register(Modalidade)
+admin.site.register(Programa)
 admin.site.register(Cliente, ClienteAdmin)
-admin.site.register(Proposta, PropostaAdmin)
+admin.site.register(Proposta)
