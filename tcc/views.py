@@ -1,18 +1,47 @@
+from dateutil.relativedelta import relativedelta
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django import forms
-from .models import Proposta, Parcela
+from .models import Parcela, Aliquota
 from .forms import PropostaForm
 
 
 def gerar_parcelas(prop):
-    if prop.modalidade == 'SAC':
-        amortizacao = prop.principal / prop.numero_de_parcelas
-        pass
-    elif prop.modalidade == 'PRICE':
-        pass
+    indice = prop.programa.indice
+    modalidade = prop.programa.modalidade.sigla
+    valor_principal = prop.valor_principal
+    numero_de_parcelas = prop.numero_de_parcelas
+    data_criacao = prop.data_criacao
+    registro_aliquota = (Aliquota.objects.filter(indice=indice, vigencia__lte=data_criacao)
+                         .order_by("-vigencia").first())
+
+    if registro_aliquota is None:
+        raise Exception("Alíquota vigente não disponível")
     else:
-        pass
+        # Transforma a taxa anual em mensal
+        taxa_mensal = registro_aliquota.aliquota / 12
+
+    if modalidade == 'SAC':
+        amortizacao = valor_principal / numero_de_parcelas
+        for num in range(numero_de_parcelas):
+            parcela = Parcela()
+            parcela.proposta = prop
+            parcela.numero = num + 1
+            parcela.vencimento = data_criacao + relativedelta(months=num + 1)
+            parcela.valor = amortizacao + (valor_principal * taxa_mensal)
+            parcela.save()
+            valor_principal -= amortizacao
+    elif modalidade == 'PRICE':
+        valor_parcela = ((valor_principal * taxa_mensal * pow(1 + taxa_mensal, numero_de_parcelas))
+                         / (pow(1 + taxa_mensal, numero_de_parcelas) - 1))
+        for num in range(numero_de_parcelas):
+            parcela = Parcela()
+            parcela.proposta = prop
+            parcela.numero = num + 1
+            parcela.vencimento = data_criacao + relativedelta(months=num + 1)
+            parcela.valor = valor_parcela
+            parcela.save()
+    else:
+        raise Exception("Modalidade inválida")
 
 
 def cadastro_proposta(request):
@@ -23,6 +52,7 @@ def cadastro_proposta(request):
         # check whether it's valid:
         if form.is_valid():
             nova_proposta = form.save()
+            
             # Calcular e gravar parcelas
             gerar_parcelas(nova_proposta)
 

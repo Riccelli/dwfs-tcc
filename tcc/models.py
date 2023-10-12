@@ -62,7 +62,11 @@ class Proposta(models.Model):
     numero_de_parcelas = models.IntegerField('Número de Parcelas', default=0)
 
     def __str__(self):
-        return self.contrato
+        descricao = (('Contrato: ' + str(self.contrato)
+                     + ' - Principal R$ ' + str(self.valor_principal)
+                     + ' - # Parcelas: ' + str(self.numero_de_parcelas))
+                     + ' - Data: ' + str(self.data_criacao))
+        return descricao
 
 
 class Parcela(models.Model):
