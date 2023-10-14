@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'dwfs'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_052741806B384CAD82DCC93FE17C43E0 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_131C1EFB1C064FD181E9228E19A3E001 }}
