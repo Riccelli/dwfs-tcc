@@ -31,8 +31,6 @@ ALLOWED_HOSTS = [
 
 CSRF_TRUSTED_ORIGINS = [
     'https://dwfs.azurewebsites.net',
-    'http://dwfs.azurewebsites.net',
-    'http://127.0.0.1',
 ]
 
 # Application definition
@@ -134,7 +132,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 STORAGES = {
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
@@ -143,4 +141,4 @@ LOGIN_REDIRECT_URL = '/'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
