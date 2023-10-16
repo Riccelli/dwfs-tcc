@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-5bi#j^_-it-lufamm*oqh_xn3$x3rozoxe@4gj6+@md+6r8bk4"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'dwfs.azurewebsites.net',
@@ -85,11 +85,11 @@ WSGI_APPLICATION = "dwfs.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'silly.db.elephantsql.com',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
-        'NAME': 'yxqsylpn',
-        'USER': 'yxqsylpn',
-        'PASSWORD': 'bPLorQIhjkG-A144F2JGvKaE0MKCosup',
+        'NAME': 'dwfsdb',
+        'USER': 'udwfs',
+        'PASSWORD': 'TCC@DWFS',
     }
 }
 

@@ -1,8 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.contrib import admin
 
 
 # Create your models here.
 class Cliente(models.Model):
+    user = models.OneToOneField(User, on_delete=models.RESTRICT)
     cpf = models.CharField(max_length=11)
     nome = models.CharField(max_length=200)
 
@@ -54,12 +57,23 @@ class Programa(models.Model):
 
 
 class Proposta(models.Model):
+    NOVA = "N"
+    APROVADA = "A"
+    REJEITADA = "R"
+
+    STATUS_DA_PROPOSTA = [
+        (NOVA, "Nova"),
+        (APROVADA, "Aprovada"),
+        (REJEITADA, "Rejeitada"),
+    ]
+
     programa = models.ForeignKey(Programa, on_delete=models.RESTRICT)
     cliente = models.ForeignKey(Cliente, on_delete=models.RESTRICT)
     contrato = models.CharField(max_length=20)
     data_criacao = models.DateField('Data de Criação')
-    valor_principal = models.DecimalField(max_digits=18, decimal_places=2, default=0)
-    numero_de_parcelas = models.IntegerField('Número de Parcelas', default=0)
+    valor_principal = models.DecimalField(max_digits=18, decimal_places=2)
+    numero_de_parcelas = models.IntegerField('Número de Parcelas')
+    status = models.CharField(max_length=1, choices=STATUS_DA_PROPOSTA, default=NOVA)
 
     def __str__(self):
         descricao = (('Contrato: ' + str(self.contrato)
