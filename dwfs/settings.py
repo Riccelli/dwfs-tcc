@@ -85,11 +85,11 @@ WSGI_APPLICATION = "dwfs.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': '127.0.0.1',
+        'HOST': 'silly.db.elephantsql.com',
         'PORT': '5432',
-        'NAME': 'dwfsdb',
-        'USER': 'udwfs',
-        'PASSWORD': 'TCC@DWFS',
+        'NAME': 'yxqsylpn',
+        'USER': 'yxqsylpn',
+        'PASSWORD': 'bPLorQIhjkG-A144F2JGvKaE0MKCosup',
     }
 }
 
