@@ -54,3 +54,7 @@ admin.site.register(Proposta, PropostaAdmin)
 # Re-register UserAdmin
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
+
+admin.site.site_header = 'Desenvolvimento Web Full Stack - PUC Minas'
+admin.site.site_title = 'Projeto Integrado'
+admin.site.index_title = 'TCC'
