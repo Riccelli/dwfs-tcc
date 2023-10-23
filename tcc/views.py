@@ -1,47 +1,54 @@
 from dateutil.relativedelta import relativedelta
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import Parcela, Aliquota
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from .models import Proposta, Parcela, Aliquota
 from .forms import PropostaForm
 
 
-def gerar_parcelas(prop):
-    indice = prop.programa.indice
-    modalidade = prop.programa.modalidade.sigla
-    valor_principal = prop.valor_principal
-    numero_de_parcelas = prop.numero_de_parcelas
-    data_criacao = prop.data_criacao
-    registro_aliquota = (Aliquota.objects.filter(indice=indice, vigencia__lte=data_criacao)
-                         .order_by("-vigencia").first())
+@receiver(post_save, sender=Proposta, dispatch_uid="gerar_parcelas")
+def gerar_parcelas(sender, **kwargs):
+    instance = kwargs["instance"]
+    created = kwargs["created"]
 
-    if registro_aliquota is None:
-        raise Exception("Alíquota vigente não disponível")
-    else:
-        # Transforma a taxa anual em mensal
-        taxa_mensal = registro_aliquota.aliquota / 12
+    if created:
+        indice = instance.programa.indice
+        modalidade = instance.programa.modalidade.sigla
+        valor_principal = instance.valor_principal
+        numero_de_parcelas = instance.numero_de_parcelas
+        data_criacao = instance.data_criacao
+        registro_aliquota = (Aliquota.objects.filter(indice=indice, vigencia__lte=data_criacao)
+                             .order_by("-vigencia").first())
 
-    if modalidade == 'SAC':
-        amortizacao = valor_principal / numero_de_parcelas
-        for num in range(numero_de_parcelas):
-            parcela = Parcela()
-            parcela.proposta = prop
-            parcela.numero = num + 1
-            parcela.vencimento = data_criacao + relativedelta(months=num + 1)
-            parcela.valor = amortizacao + (valor_principal * taxa_mensal)
-            parcela.save()
-            valor_principal -= amortizacao
-    elif modalidade == 'PRICE':
-        valor_parcela = ((valor_principal * taxa_mensal * pow(1 + taxa_mensal, numero_de_parcelas))
-                         / (pow(1 + taxa_mensal, numero_de_parcelas) - 1))
-        for num in range(numero_de_parcelas):
-            parcela = Parcela()
-            parcela.proposta = prop
-            parcela.numero = num + 1
-            parcela.vencimento = data_criacao + relativedelta(months=num + 1)
-            parcela.valor = valor_parcela
-            parcela.save()
-    else:
-        raise Exception("Modalidade inválida")
+        if registro_aliquota is None:
+            raise Exception("Alíquota vigente não disponível")
+        else:
+            # Transforma a taxa anual em mensal
+            taxa_mensal = registro_aliquota.aliquota / 12
+
+        if modalidade == 'SAC':
+            amortizacao = valor_principal / numero_de_parcelas
+            for num in range(numero_de_parcelas):
+                parcela = Parcela()
+                parcela.proposta = instance
+                parcela.numero = num + 1
+                parcela.vencimento = data_criacao + relativedelta(months=num + 1)
+                parcela.valor = amortizacao + (valor_principal * taxa_mensal)
+                parcela.save()
+                valor_principal -= amortizacao
+        elif modalidade == 'PRICE':
+            valor_parcela = ((valor_principal * taxa_mensal * pow(1 + taxa_mensal, numero_de_parcelas))
+                             / (pow(1 + taxa_mensal, numero_de_parcelas) - 1))
+            for num in range(numero_de_parcelas):
+                parcela = Parcela()
+                parcela.proposta = instance
+                parcela.numero = num + 1
+                parcela.vencimento = data_criacao + relativedelta(months=num + 1)
+                parcela.valor = valor_parcela
+                parcela.save()
+        else:
+            raise Exception("Modalidade inválida")
 
 
 def cadastro_proposta(request):
@@ -53,9 +60,6 @@ def cadastro_proposta(request):
         if form.is_valid():
             nova_proposta = form.save()
             
-            # Calcular e gravar parcelas
-            gerar_parcelas(nova_proposta)
-
             return HttpResponseRedirect(str.format("/tcc/proposta/{0}/change", nova_proposta.id))
 
     # if a GET (or any other method) we'll create a blank form
