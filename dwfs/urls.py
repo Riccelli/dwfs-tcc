@@ -22,8 +22,7 @@ admin.site.site_title = 'TCC - DWFS'
 admin.site.site_header = 'Administração'
 
 urlpatterns = [
-    path('tcc/', include('tcc.urls')),
     path('', include('django.contrib.auth.urls')),
-    path('', include('admin_volt.urls')),
-    path('', admin.site.urls),
+    path('tcc/', include('tcc.urls')),
+    path('admin/', admin.site.urls),
 ]
