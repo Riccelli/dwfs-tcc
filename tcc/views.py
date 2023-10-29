@@ -74,3 +74,9 @@ def cadastro_proposta(request):
         form.fields["numero_de_parcelas"].widget.attrs.update({"class": "form-control"})
 
     return render(request, "tcc/proposta.html", {"form": form})
+
+
+def home(request):
+    return HttpResponseRedirect('/admin/')
+
+

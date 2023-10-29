@@ -18,6 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+import tcc.views
+
 admin.site.site_title = 'TCC - DWFS'
 admin.site.site_header = 'Administração'
 
@@ -25,4 +27,5 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('tcc/', include('tcc.urls')),
     path('admin/', admin.site.urls),
+    path('', tcc.views.home)
 ]
