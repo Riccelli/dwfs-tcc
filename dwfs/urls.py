@@ -20,8 +20,9 @@ from django.urls import path, include
 
 import tcc.views
 
-admin.site.site_title = 'TCC - DWFS'
-admin.site.site_header = 'Administração'
+admin.site.site_header = 'Desenvolvimento Web Full Stack - PUC Minas'
+admin.site.site_title = 'Projeto Integrado'
+admin.site.index_title = 'TCC'
 
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
